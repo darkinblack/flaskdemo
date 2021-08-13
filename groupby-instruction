@@ -1,0 +1,86 @@
+# manul
+
+# domain 
+
+szl940614.pythonanywhere.com
+
+# testpage - it should show "it works"
+/home
+
+
+#signup or register - post only
+
+/register
+
+{
+    "email":"1@1.com",
+    "password1":"123qwe!",
+    "password2":"123qwe!"
+}
+
+
+#login - post only
+
+/login
+
+{
+    "email":"1@1.com",
+    "password":"123qwe!"
+}
+
+
+# login_uuid - post only
+
+/login_uuid
+
+{
+    "email":"1@1.com",
+    "password":"123qwe!"
+}
+
+# updateinfo - login require, get for get info post for change info
+
+/updateinfo
+
+{
+    "interests":"abc,dfs",
+    "age":22,
+    "firstname":"aaron",
+    "lastname":"rock"
+}
+
+# updateinfo_uuid - post only, "type" for get or update
+
+/updateinfo_uuid
+
+{
+    "type":"get",
+    "uuid": "0a0552db26c842a7a7ec1ba73b5fc363",
+    "interests":"aaa,dfs",
+    "age":22,
+    "firstname":"aaron",
+    "lastname":"rock"
+}
+
+# nearpeople - get for random data, post for data in range
+
+/nearpeople
+
+{
+    "lon":-74.000000,
+    "lat":41.000000,
+    "top":45.000000,
+    "bottom":38.000000,
+    "left":-78.000000,
+    "right":-71.000000
+}
+
+
+# search - post only, search users with same interests
+
+/search
+
+{
+    "interest":"letter"
+}
+
