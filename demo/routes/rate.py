@@ -1,11 +1,12 @@
-from flask import  Blueprint,request
-from flask import  render_template, redirect, url_for, flash, session
+from flask import Blueprint, request
+from flask import render_template, redirect, url_for, flash, session
 from ..models import db
 from sqlalchemy import and_, or_
-from ..models import User, Userinfo,Rate
+from ..models import User, Userinfo, Rate
 from functools import wraps
 
 rate = Blueprint('rate', __name__)
+
 
 def login_required(func):
     @wraps(func)
@@ -14,9 +15,10 @@ def login_required(func):
         if session.get('email'):
             return func(*args, **kwargs)
         else:
-            return "you havent login" #
+            return "you havent login"  #
 
     return wrapper
+
 
 @rate.route('/rate', methods=['GET', 'POST'])
 # @login_required
@@ -25,7 +27,7 @@ def rate_index():
     uuid_temp = my_json["uuid"]
     user = User.query.filter(User.uuid == uuid_temp).first()
     userinfo = Userinfo.query.filter(Userinfo.email == user.email).first()
-    
+
     if request.method == 'POST':
         # if my_json["type"] == "get":
         #     try:
@@ -56,7 +58,7 @@ def rate_index():
         #         pass
         #     db.session.commit()
         if my_json["type"] == "update":
-            rate = Rate(user_id = user.id, target=my_json['target'],rate = my_json["rate"])
+            rate = Rate(user_id=user.id, target=my_json['target'], rate=my_json["rate"])
             db.session.add(rate)
             db.session.commit()
             return "add rate"

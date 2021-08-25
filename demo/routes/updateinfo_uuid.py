@@ -30,7 +30,7 @@ def updateinfo_uuid_index():
         if my_json["type"] == "get":
             try:
                 return {'interest': userinfo.interests, 'firstname': userinfo.firstname, 'lastname': userinfo.lastname \
-                    , 'age': userinfo.age, 'uuid': user.uuid}
+                    , 'age': userinfo.age, 'uuid': user.uuid,'gender': userinfo.gender, 'birthday': userinfo.birthday}
             except:
                 return "error"
         elif my_json["type"] == "update":
@@ -54,11 +54,18 @@ def updateinfo_uuid_index():
                 userinfo.age = my_json['age']
             except:
                 pass
+            try:
+                userinfo.gender = my_json['gender']
+            except:
+                pass
+            try:
+                userinfo.birthday = my_json['birthday']
+            except:
+                pass
+
             db.session.commit()
-        return "updated " + str(my_json)
+            my_json["result"] = "updated"
+        return  my_json
     elif request.method == 'GET':
-        try:
-            return {'interest': userinfo.interests, 'firstname': userinfo.firstname, 'lastname': userinfo.lastname \
-                , 'age': userinfo.age,'uuid':user.uuid}
-        except:
-            return "error"
+
+        return "error"

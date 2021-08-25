@@ -29,6 +29,8 @@ class Userinfo(db.Model):
     interests = db.Column(db.String(200))
     firstname = db.Column(db.String(20))
     lastname = db.Column(db.String(20))
+    gender = db.Column(db.String(20))
+    birthday = db.Column(db.String(10))
     age = db.Column(db.Integer)
     lat = db.Column(db.Float)
     lon = db.Column(db.Float)

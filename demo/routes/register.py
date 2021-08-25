@@ -4,7 +4,8 @@ from ..models import db
 from sqlalchemy import and_, or_
 from ..models import User, Userinfo
 from functools import wraps
-
+from uuid import uuid4
+from demo import add_to_firebase
 register = Blueprint('register', __name__)
 
 
@@ -87,9 +88,33 @@ def register_index():
             user_info = Userinfo(id=user.id, email=user.email, interests=None)
             db.session.add(user_info)
             db.session.commit()
-            flash("success register！")
+            # flash("success register！")
             my_json["message"] = "success register！"
-            my_json["userid"] = user.id
+
+            user = User.query.filter(and_(User.email == my_json['email'], User.password == my_json['password1'])).first()
+            uuid_temp = uuid4().hex
+            user.uuid = uuid_temp
+            my_json["uuid"] = uuid_temp
+            db.session.commit()
+
+            data = {
+                'email':user.email,
+                'password':user.password,
+                'uuid':user.uuid
+            }
+            add_to_firebase.add_to_user(data,user.id)
+            userinfo = Userinfo.query.filter(Userinfo.email == user.email).first()
+            data2 = {
+                'age':userinfo.age,
+                'firstname':userinfo.firstname,
+                'lastname':userinfo.lastname,
+                'gender':userinfo.gender,
+                'interest':userinfo.interests,
+                'birthday':userinfo.birthday
+            }
+
+            add_to_firebase.add_to_userinfo(data2,userinfo.id)
+
             return my_json
 
         my_json["error"] = error
