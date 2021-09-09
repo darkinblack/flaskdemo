@@ -18,7 +18,7 @@ def valid_regist(email):
         return True
 
 
-# login
+# login not working in register
 def login_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -31,7 +31,7 @@ def login_required(func):
     return wrapper
 
 
-# check password
+# check password legal
 def check_number_exit(password):
     number = False
     for x in password:
@@ -70,7 +70,7 @@ def register_index():
     if request.method == 'POST':
 
         my_json = request.get_json()
-
+        # check password legal
         if my_json['password1'] != my_json['password2']:
             error = "diff password"
         elif not check_password(my_json["password1"]):
@@ -80,9 +80,10 @@ def register_index():
         else:
             user = User(password=my_json['password1'], email=my_json['email'])
 
+            # create user database
             db.session.add(user)
             db.session.commit()
-
+            # create userinfo database with same id
             user = User.query.filter(User.email == my_json['email']).first()
             print(user.id)
             user_info = Userinfo(id=user.id, email=user.email, interests=None)
@@ -90,19 +91,20 @@ def register_index():
             db.session.commit()
             # flash("success register！")
             my_json["message"] = "success register！"
-
+            # create uuid
             user = User.query.filter(and_(User.email == my_json['email'], User.password == my_json['password1'])).first()
             uuid_temp = uuid4().hex
             user.uuid = uuid_temp
             my_json["uuid"] = uuid_temp
             db.session.commit()
-
+            # add to firebase user
             data = {
                 'email':user.email,
                 'password':user.password,
                 'uuid':user.uuid
             }
             add_to_firebase.add_to_user(data,user.id)
+            # add to firebase userinfo
             userinfo = Userinfo.query.filter(Userinfo.email == user.email).first()
             data2 = {
                 'age':userinfo.age,

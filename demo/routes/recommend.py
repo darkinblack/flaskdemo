@@ -32,7 +32,7 @@ def login_required(func):
     return wrapper
 
 
-
+# add dictionary
 def getSimModle():
     # add data
     data = Dataset.load_builtin('ml-100k')
@@ -94,37 +94,9 @@ def recommend_index():
 
     if request.method == 'POST':
 
-
+        # find most like people with movie data
         return {"recommend_user" :showSimilarMovies(algo,user.id)}
-        # if my_json["type"] == "get":
-        #     try:
-        #         return {'interest': userinfo.interests, 'firstname': userinfo.firstname, 'lastname': userinfo.lastname \
-        #             , 'age': userinfo.age, 'uuid': user.uuid}
-        #     except:
-        #         return "error"
-        # elif my_json["type"] == "update":
-        #
-        #
-        #
-        #
-        #     try:
-        #         userinfo.interests = my_json['interests']
-        #     except:
-        #         pass
-        #     try:
-        #         userinfo.firstname = my_json['firstname']
-        #     except:
-        #         pass
-        #     try:
-        #         userinfo.lastname = my_json['lastname']
-        #     except:
-        #         pass
-        #     try:
-        #         userinfo.age = my_json['age']
-        #     except:
-        #         pass
-        #     db.session.commit()
-        # return "updated " + str(my_json)
+    # not working
     elif request.method == 'GET':
         try:
             return {'interest': userinfo.interests, 'firstname': userinfo.firstname, 'lastname': userinfo.lastname \

@@ -28,7 +28,7 @@ class hobby_coff:
     def __init__(self):
         with open('/Users/zhaolunshi/Desktop/flaskdemo/demo/hobby_dic.json') as f:
             self.coff = json.load(f)
-
+# start dictionary
 hobby_coff = hobby_coff()
 
 
@@ -36,7 +36,7 @@ hobby_coff = hobby_coff()
 
 first_login = Blueprint('first_login', __name__)
 
-#
+# create random user to test
 def get_interest(n):
     n = n//200
 
@@ -63,7 +63,7 @@ def coff_two_hobby(hobby1,hobby2):
     except:
         return 0
 
-
+# calc match_rate higher means more similar
 def match_rate(main_user_hobby,target_user_hobby):
     coff = []
     for hobby in main_user_hobby:

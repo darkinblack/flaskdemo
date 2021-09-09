@@ -9,6 +9,8 @@ import random
 
 nearpeople = Blueprint('nearpeople', __name__)
 
+
+# random location near ny for test
 def random_location():
     n = random.randint(-500000, 500000)/100000
     m = random.randint(-500000, 500000)/100000
@@ -41,7 +43,7 @@ def nearpeople_index():
     my_json = request.get_json()
     if request.method == 'POST':
 
-
+        # find people can be shown in the map
         my_json = request.get_json()
         longtitude = my_json["lon"]
         latitude = my_json["lat"]
@@ -52,13 +54,14 @@ def nearpeople_index():
         center = (latitude,longtitude)
         print(longtitude,latitude)
 
-
+        # find all user with sql query
         user_list = {}
         output = {}
         output['center of circle'] = [longtitude,latitude]
         target = Userinfo.query.filter(and_(Userinfo.lon > left, Userinfo.lon <right,\
                                             Userinfo.lat>bottom,Userinfo.lat<top)).all()
         # target = Userinfo.query.filter(and_(Userinfo.lon > -74,Userinfo.lon <-72)).all()
+        # add all user into dict
         if target:
             print("1")
             for people in target:
@@ -83,7 +86,7 @@ def nearpeople_index():
 
 
     elif request.method == 'GET':
-
+        # create 100 random user around ny to test
         for i in range(100):
             latitude,longtitude = random_location()
             userinfo = Userinfo(age=i % 30, firstname=str(i) + 'name', lastname=str(i) + 'laname',

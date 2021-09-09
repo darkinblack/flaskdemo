@@ -29,34 +29,7 @@ def rate_index():
     userinfo = Userinfo.query.filter(Userinfo.email == user.email).first()
 
     if request.method == 'POST':
-        # if my_json["type"] == "get":
-        #     try:
-        #         return {'interest': userinfo.interests, 'firstname': userinfo.firstname, 'lastname': userinfo.lastname \
-        #             , 'age': userinfo.age, 'uuid': user.uuid}
-        #     except:
-        #         return "error"
-        # elif my_json["type"] == "update":
-        #
-        #
-        #
-        #
-        #     try:
-        #         userinfo.interests = my_json['interests']
-        #     except:
-        #         pass
-        #     try:
-        #         userinfo.firstname = my_json['firstname']
-        #     except:
-        #         pass
-        #     try:
-        #         userinfo.lastname = my_json['lastname']
-        #     except:
-        #         pass
-        #     try:
-        #         userinfo.age = my_json['age']
-        #     except:
-        #         pass
-        #     db.session.commit()
+        # add rate from one user to another
         if my_json["type"] == "update":
             rate = Rate(user_id=user.id, target=my_json['target'], rate=my_json["rate"])
             db.session.add(rate)

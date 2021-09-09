@@ -25,19 +25,19 @@ def updateinfo_uuid_index():
     uuid_temp = my_json["uuid"]
     user = User.query.filter(User.uuid == uuid_temp).first()
     userinfo = Userinfo.query.filter(Userinfo.email == user.email).first()
-
+    # http post method. But keyword type can be get or update.
     if request.method == 'POST':
+        # get to get info
         if my_json["type"] == "get":
             try:
                 return {'interest': userinfo.interests, 'firstname': userinfo.firstname, 'lastname': userinfo.lastname \
                     , 'age': userinfo.age, 'uuid': user.uuid,'gender': userinfo.gender, 'birthday': userinfo.birthday}
             except:
                 return "error"
+        # update to update info
         elif my_json["type"] == "update":
 
-
-
-
+            # update  do not need to have them all
             try:
                 userinfo.interests = my_json['interests']
             except:
@@ -66,6 +66,7 @@ def updateinfo_uuid_index():
             db.session.commit()
             my_json["result"] = "updated"
         return  my_json
+    # should not be active
     elif request.method == 'GET':
 
         return "error"

@@ -28,7 +28,7 @@ def login_uuid_index():
             userinfo = Userinfo.query.filter(Userinfo.email == my_json['email']).first()
             my_json['id'] = userinfo.id
 
-            #creat temp uuid
+            # create temp uuid
             user = User.query.filter(and_(User.email == my_json['email'], User.password == my_json['password'])).first()
             uuid_temp = uuid4().hex
             user.uuid = uuid_temp
